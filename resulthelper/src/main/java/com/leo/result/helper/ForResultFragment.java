@@ -43,9 +43,13 @@ public class ForResultFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        OnActivityResultListener listener = actResultListeners.get(requestCode);
-        listener.onResult(resultCode, data);
-        actResultListeners.remove(requestCode);
+        if (actResultListeners.size() > 0) {
+            OnActivityResultListener listener = actResultListeners.get(requestCode);
+            if (listener != null && data != null) {
+                listener.onResult(resultCode, data);
+            }
+            actResultListeners.remove(requestCode);
+        }
     }
 
 
